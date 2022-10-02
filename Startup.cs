@@ -20,8 +20,12 @@ namespace LifeTravel
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LIFETravel", Version = "v1" });
+            });
             services.AddDbContext<DataBase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,6 +33,8 @@ namespace LifeTravel
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LIFETravel v1"));
             }
 
             app.UseHttpsRedirection();

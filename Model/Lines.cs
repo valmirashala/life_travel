@@ -11,6 +11,11 @@
         public string StopTwoTime { get; set; }
         public string EndCiti { get; set; }
         public string EndTime { get; set; }
+
+        public static explicit operator Lines(List<Lines> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

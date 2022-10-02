@@ -2,6 +2,7 @@
 using LifeTravel.Data;
 using LifeTravel.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace LifeTravel.Controllers
 {
@@ -15,20 +16,43 @@ namespace LifeTravel.Controllers
         }
 
         [HttpGet("lines")]
-        public IEnumerable<Lines> Get()
+        public List<Lines> Get()
         {
-            Console.WriteLine("ketuu");
             var AllLines = ReadFromDataBase.Lines.ToList();
+            Console.WriteLine("$$$$");
             return AllLines;
         }
 
         [HttpGet("line")]
-        public Lines Get(int id)
+        public IEnumerable<Lines> Get(string StartCiti, string EndCiti)
         {
-            Console.WriteLine("tjetraa");
-            Lines filteredData;
-            filteredData = ReadFromDataBase.Lines.
-                Where(x => x.Id == id).FirstOrDefault();
+            var filteredData = ReadFromDataBase.Lines.
+                Where(x => (x.StartCiti == StartCiti || x.StopOne == StartCiti || x.StopTwo == StartCiti)
+                && (x.EndCiti == EndCiti || x.StopOne == EndCiti || x.StopTwo == EndCiti)).ToList();
+            if (filteredData.Count == 0)
+            {
+                string cs = "Server=localhost;Database=LIFETravel;Trusted_Connection=True;Encrypt=false";
+                SqlConnection con = new SqlConnection(cs);
+                string querry = "select * from lines where StartCiti in" +
+                    "(select EndCiti from Lines where StartCiti = '" + StartCiti + "')";
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = querry;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+
+                var firstFilter = ReadFromDataBase.Lines.Where(x =>
+                (x.StartCiti == StartCiti || x.StopOne == StartCiti || x.StopTwo == StartCiti) &&
+                (x.EndCiti == reader["startciti"])).ToList();
+                var secondFilter = ReadFromDataBase.Lines.Where(x =>
+                (x.StartCiti == reader["startciti"]) &&
+                (x.StopOne == EndCiti || x.StopTwo == EndCiti || x.EndCiti == EndCiti)).ToList();
+
+                con.Close();
+
+                return firstFilter.Union(secondFilter);
+            }
             return filteredData;
         }
     }

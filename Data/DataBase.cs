@@ -6,6 +6,7 @@ namespace LifeTravel.Data
 {
     public class DataBase : DbContext
     {
+        //Constructor
         public DataBase(DbContextOptions<DataBase> options) : base(options)
         {
 
