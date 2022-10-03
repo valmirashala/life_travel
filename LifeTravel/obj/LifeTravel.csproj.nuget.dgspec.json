@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\herol\\OneDrive\\Desktop\\LIFEfromGjirafa\\Periudha e dyte\\Project\\LifeTravel\\LifeTravel\\LifeTravel.csproj": {}
+    "C:\\Users\\User\\Documents\\GitHub\\life_travel\\LifeTravel\\LifeTravel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\herol\\OneDrive\\Desktop\\LIFEfromGjirafa\\Periudha e dyte\\Project\\LifeTravel\\LifeTravel\\LifeTravel.csproj": {
+    "C:\\Users\\User\\Documents\\GitHub\\life_travel\\LifeTravel\\LifeTravel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\herol\\OneDrive\\Desktop\\LIFEfromGjirafa\\Periudha e dyte\\Project\\LifeTravel\\LifeTravel\\LifeTravel.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\LifeTravel\\LifeTravel.csproj",
         "projectName": "LifeTravel",
-        "projectPath": "C:\\Users\\herol\\OneDrive\\Desktop\\LIFEfromGjirafa\\Periudha e dyte\\Project\\LifeTravel\\LifeTravel\\LifeTravel.csproj",
-        "packagesPath": "C:\\Users\\herol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\herol\\OneDrive\\Desktop\\LIFEfromGjirafa\\Periudha e dyte\\Project\\LifeTravel\\LifeTravel\\obj\\",
+        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\LifeTravel\\LifeTravel.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\LifeTravel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\herol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -110,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

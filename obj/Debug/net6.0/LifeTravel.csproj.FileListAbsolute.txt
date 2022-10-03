@@ -76,3 +76,6 @@ C:\Users\herol\OneDrive\Desktop\LIFEfromGjirafa\Periudha e dyte\Project\LifeTrav
 C:\Users\herol\OneDrive\Desktop\LIFEfromGjirafa\Periudha e dyte\Project\LifeTravel\LifeTravel\bin\Debug\net6.0\FluentAssertions.dll
 C:\Users\herol\OneDrive\Desktop\LIFEfromGjirafa\Periudha e dyte\Project\LifeTravel\LifeTravel\bin\Debug\net6.0\FluentAssertions.Json.dll
 C:\Users\herol\OneDrive\Desktop\LIFEfromGjirafa\Periudha e dyte\Project\LifeTravel\LifeTravel\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\User\Documents\GitHub\life_travel\obj\Debug\net6.0\LifeTravel.dll
+C:\Users\User\Documents\GitHub\life_travel\obj\Debug\net6.0\refint\LifeTravel.dll
+C:\Users\User\Documents\GitHub\life_travel\obj\Debug\net6.0\LifeTravel.pdb
