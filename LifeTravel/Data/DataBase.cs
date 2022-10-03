@@ -12,5 +12,6 @@ namespace LifeTravel.Data
 
         }
         public DbSet<Lines> Lines { get; set; }
+        public DbSet<BusInfo> BusInfos { get; set; }
     }
 }
