@@ -18,14 +18,14 @@ namespace Travelephant.Controllers
         {
             _context = context;
         }
-        [HttpGet("getalltickets")]
+        [HttpGet("get-all-tickets")]
         public IEnumerable<Ticket> Get()
         {
             var Tickets = _context.Ticket.ToList();
             return Tickets;
         }
 
-        [HttpGet("gettickets")]
+        [HttpGet("get-tickets")]
         public IEnumerable<Ticket> GetTickets(int Id)
         {
             var Tickets = _context.Ticket
@@ -34,7 +34,7 @@ namespace Travelephant.Controllers
             return Tickets;
         }
 
-        [HttpPut("cancelticket")]
+        [HttpPut("cancel-ticket")]
         public IEnumerable<Ticket> CancelTicket(int UserID, int BusID)
         {
             //Get ticket with that UserID and BusID that if it is reserved
@@ -42,7 +42,7 @@ namespace Travelephant.Controllers
                 .Where(x => x.UserID == UserID && x.BusID == BusID && x.IsActive).FirstOrDefault();
             //Get busline infos with BusID
             var busInfo = _context.BusInfo
-                .Where(x => x.BusId == BusID).FirstOrDefault();
+                .Where(x => x.Id == BusID).FirstOrDefault();
 
             if (ticket != null)
             {
@@ -56,7 +56,7 @@ namespace Travelephant.Controllers
             return Tickets;
         }
 
-        [HttpPut("bookticket")]
+        [HttpPut("book-ticket")]
         public IEnumerable<Ticket> BookTicket(int UserID, int BusID)
         {
             //Get ticket with that UserID and BusID that if it is not reserved
@@ -64,7 +64,7 @@ namespace Travelephant.Controllers
                 .Where(x => x.UserID == UserID && x.BusID == BusID && !x.IsActive).FirstOrDefault();
             //Get busline infos with BusID
             var busInfo = _context.BusInfo
-                .Where(x => x.BusId == BusID).FirstOrDefault();
+                .Where(x => x.Id == BusID).FirstOrDefault();
 
             if (ticket != null)
             {

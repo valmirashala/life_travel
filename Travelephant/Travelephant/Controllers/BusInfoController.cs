@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration.UserSecrets;
+﻿using Microsoft.AspNetCore.Mvc;
 using Travelephant.Data;
 using Travelephant.Model;
 
 namespace Travelephant.Controllers
 {
-    public class BusInfoesController : Controller
+    public class BusInfoController : Controller
     {
         private readonly TravelephantContext _context;
 
-        public BusInfoesController(TravelephantContext context)
+        public BusInfoController(TravelephantContext context)
         {
             _context = context;
         }
 
-        [HttpGet("allbusinfo")]
+        [HttpGet("all-bus-info")]
         public List<BusInfo> Get()
         {
-            var AllBusInfo = _context.BusInfo.ToList();
-            return AllBusInfo;
+            var allBusInfo = _context.BusInfo.ToList();
+            return allBusInfo;
         }
 
-        [HttpGet("sepcificbusinfo")]
+        [HttpGet("sepcific-bus-info")]
         public IEnumerable<BusInfo> Get(string Departure, string Destination)
         {
             //Filters lines that satart at Departure and ends on Destination
@@ -36,7 +29,7 @@ namespace Travelephant.Controllers
                 .Where(x => x.Departure == Departure && x.Destination == Destination).ToList();
 
             //If there is no direct line
-            if (FilteredData.Count != 0)
+            if (FilteredData.Count == 0)
             {
                 //Filter all lines that starts from StartCiti
                 var FirstFilter = _context.BusInfo
@@ -77,17 +70,18 @@ namespace Travelephant.Controllers
             return FilteredData;
         }
 
-        [HttpGet("buslineid")]
+        [HttpGet("bus-line-id")]
         public int GetBusLineID(string Name, DateTime DepartureTime)
         {
             var busInfo = _context.BusInfo
                 .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).FirstOrDefault();
-            return busInfo.BusId;
+
+            return busInfo.Id;
         }
 
-        [HttpPut("setprice")]
+        [HttpPut("set-price")]
         public IEnumerable<BusInfo> SetPrice(string Username, string Name,
-            DateTime DepartureTime, int Price)
+            DateTime DepartureTime, double Price)
         {
             //Get User with username == Username
             var user = _context.User
@@ -102,7 +96,7 @@ namespace Travelephant.Controllers
 
                 _context.SaveChanges();
                 var BusInfos = _context.BusInfo
-                    .Where(x => x.BusId == busInfo.BusId).ToList();
+                    .Where(x => x.Id == busInfo.Id).ToList();
                 return BusInfos;
             }
             //If the user is not admin don't set price
@@ -114,7 +108,7 @@ namespace Travelephant.Controllers
             }
         }
 
-        [HttpPost("addbusline")]
+        [HttpPost("add-bus-line")]
         public IEnumerable<BusInfo> AddBusLine(string Username, string Name, string Departure,
             string Destination, DateTime DepartureTime, int TotalSeat, int Price)
         {
@@ -131,7 +125,7 @@ namespace Travelephant.Controllers
                     Departure = Departure,
                     Destination = Destination,
                     DepartureTime = DepartureTime,
-                    //ArrivalTime = DepartureTime + '1:00:00',
+                    ArrivalTime = DepartureTime.AddHours(1),
                     TotalSeat = TotalSeat,
                     AvailableSeat = TotalSeat,
                     Price = Price,
@@ -140,7 +134,7 @@ namespace Travelephant.Controllers
                 _context.BusInfo.Add(busInfo);
                 _context.SaveChanges();
                 var BusInfos = _context.BusInfo
-                    .Where(x => x.BusId == busInfo.BusId).ToList();
+                    .Where(x => x.Id == busInfo.Id).ToList();
                 return BusInfos;
             }
             //If the user is not admin don't add the new line
@@ -152,7 +146,7 @@ namespace Travelephant.Controllers
             }
         }
 
-        [HttpDelete("deleteline")]
+        [HttpDelete("delete-line")]
         public IEnumerable<BusInfo> DeleteLine(string Username, string Name, DateTime DepartureTime)
         {
             //Get User with username == Username
@@ -166,9 +160,9 @@ namespace Travelephant.Controllers
                     .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).FirstOrDefault();
                 _context.BusInfo.Remove(busInfo);
                 _context.SaveChanges();
-                var BusInfos = _context.BusInfo
-                    .Where(x => x.BusId == busInfo.BusId).ToList();
-                return BusInfos;
+                var busInfos = _context.BusInfo
+                    .Where(x => x.Id == busInfo.Id).ToList();
+                return busInfos;
             }
             //If the user is not admin don't delete the line
             else
