@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Travelephant.Data;
 using Travelephant.Model;
 
@@ -19,143 +20,163 @@ namespace Travelephant.Controllers
             _context = context;
         }
 
-        // GET: BusInfoes
-        public async Task<IActionResult> Index()
+        [HttpGet("allbusinfo")]
+        public List<BusInfo> Get()
         {
-              return View(await _context.BusInfo.ToListAsync());
+            var AllBusInfo = _context.BusInfo.ToList();
+            return AllBusInfo;
         }
 
-        // GET: BusInfoes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpGet("sepcificbusinfo")]
+        public IEnumerable<BusInfo> Get(string Departure, string Destination)
         {
-            if (id == null || _context.BusInfo == null)
+            //Filters lines that satart at Departure and ends on Destination
+            //Direct lines from Departure to Destination
+            var FilteredData = _context.BusInfo
+                .Where(x => x.Departure == Departure && x.Destination == Destination).ToList();
+
+            //If there is no direct line
+            if (FilteredData.Count != 0)
             {
-                return NotFound();
-            }
+                //Filter all lines that starts from StartCiti
+                var FirstFilter = _context.BusInfo
+                    .Where(x => x.Departure == Departure).ToList();
 
-            var busInfo = await _context.BusInfo
-                .FirstOrDefaultAsync(m => m.BusId == id);
-            if (busInfo == null)
-            {
-                return NotFound();
-            }
+                //Filter all lines that ends on Destination
+                var SecondFilter = _context.BusInfo
+                    .Where(x => x.Destination == Destination).ToList();
 
-            return View(busInfo);
-        }
+                var FirstFiltered = new List<BusInfo>();
+                var SecondFiltered = new List<BusInfo>();
 
-        // GET: BusInfoes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: BusInfoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BusId,Name,Departure,Destination,DepartureTime,ArrivalTime,TotalSeat,AvailableSeat,Price")] BusInfo busInfo)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(busInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(busInfo);
-        }
-
-        // GET: BusInfoes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.BusInfo == null)
-            {
-                return NotFound();
-            }
-
-            var busInfo = await _context.BusInfo.FindAsync(id);
-            if (busInfo == null)
-            {
-                return NotFound();
-            }
-            return View(busInfo);
-        }
-
-        // POST: BusInfoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BusId,Name,Departure,Destination,DepartureTime,ArrivalTime,TotalSeat,AvailableSeat,Price")] BusInfo busInfo)
-        {
-            if (id != busInfo.BusId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                foreach (var item in FirstFilter)
                 {
-                    _context.Update(busInfo);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BusInfoExists(busInfo.BusId))
+                    //Takes only lines that ends on Destination and start from the Destination
+                    //of lines that start from Departure
+                    var tmp = SecondFilter.Where(x => x.Departure == item.Destination).ToList();
+                    if (tmp.Count != 0)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        FirstFiltered = new List<BusInfo>(tmp);
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                foreach (var item in SecondFilter)
+                {
+                    //Takes only lines that starts on Departure and end on Departure
+                    //of lines that ends on Destination
+                    var tmp = FirstFilter.Where(x => x.Destination == item.Departure).ToList();
+                    if (tmp.Count != 0)
+                    {
+                        SecondFiltered = new List<BusInfo>(tmp);
+                    }
+                }
+
+                return SecondFiltered.Union(FirstFiltered);
             }
-            return View(busInfo);
+
+            return FilteredData;
         }
 
-        // GET: BusInfoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet("buslineid")]
+        public int GetBusLineID(string Name, DateTime DepartureTime)
         {
-            if (id == null || _context.BusInfo == null)
-            {
-                return NotFound();
-            }
-
-            var busInfo = await _context.BusInfo
-                .FirstOrDefaultAsync(m => m.BusId == id);
-            if (busInfo == null)
-            {
-                return NotFound();
-            }
-
-            return View(busInfo);
+            var busInfo = _context.BusInfo
+                .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).FirstOrDefault();
+            return busInfo.BusId;
         }
 
-        // POST: BusInfoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPut("setprice")]
+        public IEnumerable<BusInfo> SetPrice(string Username, string Name,
+            DateTime DepartureTime, int Price)
         {
-            if (_context.BusInfo == null)
+            //Get User with username == Username
+            var user = _context.User
+                .Where(x => x.Username == Username).FirstOrDefault();
+
+            if (user.IsAdmin)
             {
-                return Problem("Entity set 'TravelephantContext.BusInfo'  is null.");
+                var busInfo = _context.BusInfo
+                    .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).FirstOrDefault();
+
+                busInfo.Price = Price;
+
+                _context.SaveChanges();
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.BusId == busInfo.BusId).ToList();
+                return BusInfos;
             }
-            var busInfo = await _context.BusInfo.FindAsync(id);
-            if (busInfo != null)
+            //If the user is not admin don't set price
+            else
             {
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).ToList();
+                return BusInfos;
+            }
+        }
+
+        [HttpPost("addbusline")]
+        public IEnumerable<BusInfo> AddBusLine(string Username, string Name, string Departure,
+            string Destination, DateTime DepartureTime, int TotalSeat, int Price)
+        {
+            //Get User with username == Username
+            var user = _context.User
+                .Where(x => x.Username == Username).FirstOrDefault();
+
+            //If the user is admin add the new line
+            if (user.IsAdmin)
+            {
+                var busInfo = new BusInfo
+                {
+                    Name = Name,
+                    Departure = Departure,
+                    Destination = Destination,
+                    DepartureTime = DepartureTime,
+                    //ArrivalTime = DepartureTime + '1:00:00',
+                    TotalSeat = TotalSeat,
+                    AvailableSeat = TotalSeat,
+                    Price = Price,
+
+                };
+                _context.BusInfo.Add(busInfo);
+                _context.SaveChanges();
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.BusId == busInfo.BusId).ToList();
+                return BusInfos;
+            }
+            //If the user is not admin don't add the new line
+            else
+            {
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).ToList();
+                return BusInfos;
+            }
+        }
+
+        [HttpDelete("deleteline")]
+        public IEnumerable<BusInfo> DeleteLine(string Username, string Name, DateTime DepartureTime)
+        {
+            //Get User with username == Username
+            var user = _context.User
+                .Where(x => x.Username == Username).FirstOrDefault();
+
+            //If the user is admin delete the line
+            if (user.IsAdmin)
+            {
+                var busInfo = _context.BusInfo
+                    .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).FirstOrDefault();
                 _context.BusInfo.Remove(busInfo);
+                _context.SaveChanges();
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.BusId == busInfo.BusId).ToList();
+                return BusInfos;
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool BusInfoExists(int id)
-        {
-          return _context.BusInfo.Any(e => e.BusId == id);
+            //If the user is not admin don't delete the line
+            else
+            {
+                var BusInfos = _context.BusInfo
+                    .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).ToList();
+                return BusInfos;
+            }
         }
     }
 }

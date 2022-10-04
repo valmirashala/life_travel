@@ -14,9 +14,9 @@ namespace Travelephant.Data
         {
         }
 
-        public DbSet<Travelephant.Model.User> User { get; set; } = default!;
-        public DbSet<Travelephant.Model.BusInfo> BusInfo { get; set; } = default!;
-        public DbSet<Travelephant.Model.Ticket> Ticket { get; set; } = default!;
+        public DbSet<User> User { get; set; } = default!;
+        public DbSet<BusInfo> BusInfo { get; set; } = default!;
+        public DbSet<Ticket> Ticket { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
