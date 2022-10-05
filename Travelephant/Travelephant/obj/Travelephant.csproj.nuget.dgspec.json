@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {}
+    "C:\\Users\\ardit\\Desktop\\life_travel\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {}
   },
   "projects": {
-    "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {
+    "C:\\Users\\ardit\\Desktop\\life_travel\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+        "projectUniqueName": "C:\\Users\\ardit\\Desktop\\life_travel\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
         "projectName": "Travelephant",
-        "projectPath": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
-        "packagesPath": "C:\\Users\\herol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\obj\\",
+        "projectPath": "C:\\Users\\ardit\\Desktop\\life_travel\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+        "packagesPath": "C:\\Users\\ardit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ardit\\Desktop\\life_travel\\life_travel\\Travelephant\\Travelephant\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\herol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ardit\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

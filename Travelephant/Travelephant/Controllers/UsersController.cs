@@ -1,10 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Travelephant.Data;
 using Travelephant.Model;
 
 namespace Travelephant.Controllers
 {
-    [Route("api/[controller]")]
+  
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -18,15 +27,14 @@ namespace Travelephant.Controllers
         [HttpGet("user-admin")]
         public bool IsAdmin(int Id)
         {
-            var user = _context.User.Where(x => x.Id == Id).FirstOrDefault();
+            var user = _context.User.Where(x => x.UserId == Id).FirstOrDefault();
             return user.IsAdmin;
         }
-
         [HttpGet("user-id")]
         public int GetUserId(string Username)
         {
             var user = _context.User.Where(x => x.Username == Username).FirstOrDefault();
-            return user.Id;
+            return user.UserId;
         }
 
         [HttpPost("add-user")]
@@ -55,7 +63,7 @@ namespace Travelephant.Controllers
             else
             {
                 var Users = _context.User
-                    .Where(x => x.Id == 0).ToList();
+                    .Where(x => x.UserId == 0).ToList();
                 return Users;
             }
         }

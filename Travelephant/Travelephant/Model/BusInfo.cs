@@ -4,7 +4,7 @@ namespace Travelephant.Model
 {
     public class BusInfo
     {
-        public int Id { get; set; }
+        public int BusId { get; set; }
         [Required]
         [MaxLength(20)]
         public string Name { get; set; }
@@ -22,5 +22,6 @@ namespace Travelephant.Model
         public int AvailableSeat { get; set; }
         [Required]
         public double Price { get; set; }
+        public bool IsActive { get; set; }
     }
 }

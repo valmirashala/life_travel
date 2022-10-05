@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Travelephant.Data;
 
@@ -11,9 +12,10 @@ using Travelephant.Data;
 namespace Travelephant.Migrations
 {
     [DbContext(typeof(TravelephantContext))]
-    partial class TravelephantContextModelSnapshot : ModelSnapshot
+    [Migration("20221005135026_AddedAtributeBusinfo")]
+    partial class AddedAtributeBusinfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,8 +59,8 @@ namespace Travelephant.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalSeat")
                         .HasColumnType("int");

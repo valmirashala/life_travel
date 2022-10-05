@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Travelephant.Data;
 using Travelephant.Model;
 
@@ -42,7 +36,7 @@ namespace Travelephant.Controllers
                 .Where(x => x.UserID == UserID && x.BusID == BusID && x.IsActive).FirstOrDefault();
             //Get busline infos with BusID
             var busInfo = _context.BusInfo
-                .Where(x => x.Id == BusID).FirstOrDefault();
+                .Where(x => x.BusId == BusID).FirstOrDefault();
 
             if (ticket != null)
             {
@@ -56,26 +50,29 @@ namespace Travelephant.Controllers
             return Tickets;
         }
 
-        [HttpPut("book-ticket")]
+        [HttpPost("book-ticket")]
         public IEnumerable<Ticket> BookTicket(int UserID, int BusID)
         {
-            //Get ticket with that UserID and BusID that if it is not reserved
-            var ticket = _context.Ticket
-                .Where(x => x.UserID == UserID && x.BusID == BusID && !x.IsActive).FirstOrDefault();
             //Get busline infos with BusID
             var busInfo = _context.BusInfo
-                .Where(x => x.Id == BusID).FirstOrDefault();
+                .Where(x => x.BusId == BusID).FirstOrDefault();
 
-            if (ticket != null)
+            if (busInfo.AvailableSeat > 0)
             {
-                ticket.IsActive = true;
                 busInfo.AvailableSeat--;
             }
+            var ticket = new Ticket
+            {
+                UserID = UserID,
+                BusID = BusID,
+                IsActive = true,
+            };
 
+            _context.Ticket.Add(ticket);
+            _context.SaveChanges();
             var Tickets = _context.Ticket
                 .Where(x => x.UserID == UserID && x.BusID == BusID).ToList();
 
-            _context.SaveChanges();
             return Tickets;
         }
     }
