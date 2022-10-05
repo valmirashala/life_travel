@@ -8,12 +8,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Travelephant.Body;
 using Travelephant.Data;
 using Travelephant.Model;
 
 namespace Travelephant.Controllers
 {
-    [Route("api/[controller]")]
+  
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -24,34 +25,33 @@ namespace Travelephant.Controllers
             _context = context;
         }
 
-        [HttpGet("useradmin")]
+        [HttpGet("user-admin")]
         public bool IsAdmin(int Id)
         {
             var user = _context.User.Where(x => x.UserId == Id).FirstOrDefault();
             return user.IsAdmin;
         }
-        [HttpGet("userid")]
+        [HttpGet("user-id")]
         public int GetUserId(string Username)
         {
             var user = _context.User.Where(x => x.Username == Username).FirstOrDefault();
             return user.UserId;
         }
 
-        [HttpPost("adduser")]
-        public IEnumerable<User> AddUser(string Name, string Surname, string Username,
-            string Address)
+        [HttpPost("add-user")]
+        public IEnumerable<User> AddUser(UserBody userBody)
         {
             var user = _context.User
-                .Where(x => x.Username == Username).FirstOrDefault();
+                .Where(x => x.Username == userBody.Username).FirstOrDefault();
 
             if (user == null)
             {
                 var newUser = new User
                 {
-                    Name = Name,
-                    Surname = Surname,
-                    Username = Username,
-                    Address = Address,
+                    Name = userBody.Name,
+                    Surname = userBody.Surname,
+                    Username = userBody.Username,
+                    Address = userBody.Address,
                     IsAdmin = false
                 };
                 _context.Add(newUser);
@@ -62,9 +62,7 @@ namespace Travelephant.Controllers
             }
             else
             {
-                var Users = _context.User
-                    .Where(x => x.UserId == 0).ToList();
-                return Users;
+                return Enumerable.Empty<User>();
             }
         }
     }
