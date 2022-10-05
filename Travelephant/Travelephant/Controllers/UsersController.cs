@@ -39,7 +39,7 @@ namespace Travelephant.Controllers
         }
 
         [HttpPost("add-user")]
-        public IEnumerable<User> AddUser(UserBody userBody)
+        public IEnumerable<User> AddUser([FromBody] UserBody userBody)
         {
             var user = _context.User
                 .Where(x => x.Username == userBody.Username).FirstOrDefault();

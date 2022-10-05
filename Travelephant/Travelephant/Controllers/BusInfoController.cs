@@ -122,7 +122,7 @@ namespace Travelephant.Controllers
         }
 
         [HttpPost("add-bus-line")]
-        public IEnumerable<BusInfo> AddBusLine(string Username, BusInfoBody busInfoBody)
+        public IEnumerable<BusInfo> AddBusLine(string Username, [FromBody] BusInfoBody busInfoBody)
         {
             //Get User with username == Username
             var user = _context.User
