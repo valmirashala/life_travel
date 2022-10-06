@@ -77,7 +77,7 @@ namespace Travelephant.Controllers
                 return SecondFiltered.Union(FirstFiltered);
             }
 
-            
+
 
             return FilteredData;
         }
@@ -196,6 +196,41 @@ namespace Travelephant.Controllers
                 var BusInfos = _context.BusInfo
                     .Where(x => x.Name == Name && x.DepartureTime == DepartureTime).ToList();
                 return BusInfos;
+            }
+        }
+
+        [HttpPut("update-bus-line")]
+        public BusInfo UpdateBusLine(string Username, [FromBody] BusInfoBody busInfoBody)
+        {
+            //Get User with username == Username
+            var user = _context.User
+                .Where(x => x.Username == Username).FirstOrDefault();
+
+            //If the user is admin update the bus line
+            if (user.IsAdmin)
+            {
+                var busLineFromDb = _context.BusInfo.Where(x => x.BusId == busInfoBody.BusId).FirstOrDefault();
+
+                if (busLineFromDb == null)
+                    return new BusInfo();
+
+                busLineFromDb.Name = busInfoBody.Name;
+                busLineFromDb.Departure = busInfoBody.Departure;
+                busLineFromDb.DepartureTime = busInfoBody.DepartureTime;
+                busLineFromDb.Destination = busInfoBody.Destination;
+                busLineFromDb.ArrivalTime = busInfoBody.DepartureTime + 100;
+                busLineFromDb.TotalSeat = busInfoBody.TotalSeat;
+                busLineFromDb.AvailableSeat = busInfoBody.TotalSeat;
+                busLineFromDb.Price = busInfoBody.Price;
+
+                _context.BusInfo.Update(busLineFromDb);
+                _context.SaveChanges();
+
+                return busLineFromDb;
+            }
+            else
+            {
+                return new BusInfo();
             }
         }
     }

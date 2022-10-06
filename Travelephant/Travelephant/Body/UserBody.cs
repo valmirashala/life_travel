@@ -4,8 +4,9 @@ namespace Travelephant.Body
 {
     public class UserBody
     {
+
         [Required]
-        [StringLength(20)]
+        [MaxLength(20)]
         public string Name { get; set; }
         [Required]
         [StringLength(20)]

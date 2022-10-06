@@ -4,6 +4,7 @@ namespace Travelephant.Body
 {
     public class BusInfoBody
     {
+        public int BusId { get; set; }
         [Required]
         [StringLength(20)]
         public string Name { get; set; }

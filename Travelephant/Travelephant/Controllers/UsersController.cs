@@ -52,7 +52,7 @@ namespace Travelephant.Controllers
                     Surname = userBody.Surname,
                     Username = userBody.Username,
                     Address = userBody.Address,
-                    IsAdmin = false
+                    IsAdmin = true
                 };
                 _context.Add(newUser);
                 _context.SaveChanges();
@@ -64,6 +64,27 @@ namespace Travelephant.Controllers
             {
                 return Enumerable.Empty<User>();
             }
+        }
+        [HttpPut("update-username")]
+        public User UpdateUsername(string Username, [FromBody] UserBody UserBody)
+        {
+            //Get User with username == Username
+            var user = _context.User
+                .Where(x => x.Username == Username).FirstOrDefault();
+
+                if (user == null)
+                    return new User();
+
+                user.Name = UserBody.Name;
+                user.Surname = UserBody.Surname;
+                user.Username = UserBody.Username;
+                user.Address = UserBody.Address;
+
+                _context.User.Update(user);
+                _context.SaveChanges();
+
+            return user;
+            
         }
     }
 }
