@@ -10252,19 +10252,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ardit\\.nuget\\packages\\": {}
+    "C:\\Users\\herol\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ardit\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+      "projectUniqueName": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
       "projectName": "Travelephant",
-      "projectPath": "C:\\Users\\ardit\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
-      "packagesPath": "C:\\Users\\ardit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ardit\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\obj\\",
+      "projectPath": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+      "packagesPath": "C:\\Users\\herol\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\herol\\OneDrive\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\ardit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\herol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

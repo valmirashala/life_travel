@@ -15,7 +15,7 @@ namespace Travelephant.Controllers
         }
 
         [HttpGet("all-bus-info")]
-        public List<BusInfo> Get()
+        public List<BusInfo> GetAll()
         {
             var AllBusInfo = _context.BusInfo.ToList();
             return AllBusInfo;

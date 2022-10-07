@@ -8,53 +8,53 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Travelephant
 build_property.RootNamespace = Travelephant
-build_property.ProjectDir = C:\Users\ardit\Documents\GitHub\life_travel\Travelephant\Travelephant\
+build_property.ProjectDir = C:\Users\herol\OneDrive\Documents\GitHub\life_travel\Travelephant\Travelephant\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\ardit\Documents\GitHub\life_travel\Travelephant\Travelephant
+build_property.MSBuildProjectDirectory = C:\Users\herol\OneDrive\Documents\GitHub\life_travel\Travelephant\Travelephant
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Create.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzSW5mb2VzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Delete.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzSW5mb2VzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Details.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzSW5mb2VzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Edit.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzSW5mb2VzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Index.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/BusInfoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzSW5mb2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Create.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Delete.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Details.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Edit.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ardit/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Index.cshtml]
+[C:/Users/herol/OneDrive/Documents/GitHub/life_travel/Travelephant/Travelephant/Views/Tickets/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
