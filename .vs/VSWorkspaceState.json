@@ -3,10 +3,9 @@
     "",
     "\\Travelephant",
     "\\Travelephant\\Travelephant",
-    "\\Travelephant\\Travelephant.Test",
     "\\Travelephant\\Travelephant\\Controllers",
     "\\Travelephant\\Travelephant\\Model"
   ],
-  "SelectedNode": "\\Travelephant\\.gitignore",
+  "SelectedNode": "\\Travelephant\\Travelephant\\Controllers\\BusInfoController.cs",
   "PreviewInSolutionExplorer": false
 }
