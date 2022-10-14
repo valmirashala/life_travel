@@ -17,12 +17,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<AppSettings>(
     builder.Configuration.GetSection("ApplicationSettings"));
 
-var provider = builder.Services.BuildServiceProvider();
-
-var configuration = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddCors(options =>
 {
-    var frontendURL = configuration.GetValue<string>("frontend_url");
+    var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
     options.AddDefaultPolicy(builder =>
     {
         builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
@@ -44,5 +41,9 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<TravelephantContext>();
+db.Database.Migrate();
 
 app.Run();

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {}
+    "C:\\Users\\Dass\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {
+    "C:\\Users\\Dass\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+        "projectUniqueName": "C:\\Users\\Dass\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
         "projectName": "Travelephant",
-        "projectPath": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\obj\\",
+        "projectPath": "C:\\Users\\Dass\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\Travelephant.csproj",
+        "packagesPath": "C:\\Users\\Dass\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dass\\Documents\\GitHub\\life_travel\\Travelephant\\Travelephant\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Dass\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -100,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
