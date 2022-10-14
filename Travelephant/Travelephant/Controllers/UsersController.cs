@@ -1,35 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+
 using Travelephant.Body;
 using Travelephant.Data;
 using Travelephant.Model;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Travelephant.Helper;
+using Travelephant.Dtos;
 
 namespace Travelephant.Controllers
 {
-  
+
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly TravelephantContext _context;
-        private readonly AppSettings _applicationSettings;
+        private readonly JwtService _jwtService;
 
-        public UsersController(TravelephantContext context, IOptions<AppSettings> _applicationSettings)
+        public UsersController(TravelephantContext context, JwtService jwtService)
         {
             _context = context;
-            this._applicationSettings = _applicationSettings.Value;
+            _jwtService = jwtService;
         }
 
         [HttpGet("user-admin")]
@@ -79,26 +69,26 @@ namespace Travelephant.Controllers
             var user = _context.User
                 .Where(x => x.Username == Username).FirstOrDefault();
 
-                if (user == null)
-                    return new User();
+            if (user == null)
+                return new User();
 
-                user.Name = UserBody.Name;
-                user.Surname = UserBody.Surname;
-                user.Username = UserBody.Username;
-                user.Address = UserBody.Address;
+            user.Name = UserBody.Name;
+            user.Surname = UserBody.Surname;
+            user.Username = UserBody.Username;
+            user.Address = UserBody.Address;
 
-                _context.User.Update(user);
-                _context.SaveChanges();
+            _context.User.Update(user);
+            _context.SaveChanges();
 
             return user;
-            
+
         }
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserBody userBody)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginDto userBody)
         {
             var user = _context.User
-                 .Where(x => x.Username == userBody.Username).FirstOrDefault();
-           
+                 .Where(x => x.Username == userBody.username).FirstOrDefault();
+
             //check if user with that username exists
             if (user == null)
             {
@@ -107,24 +97,56 @@ namespace Travelephant.Controllers
 
             //Check if name the user wrote id compatible with the name of the user with the same id
             //This is just for testing purposes(in a real website we should check the password)
-            var match = (user.Name == userBody.Name) ? true : false;
+            var match = (user.Name == userBody.name) ? true : false;
             if (!match)
             {
                 return BadRequest("Username or Name was Invalid");
             }
-            //If name and username matches create the jwt token and return to the user
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key= Encoding.ASCII.GetBytes(this._applicationSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Username) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encrypterToken = tokenHandler.WriteToken(token);
-            return Ok(new { token = encrypterToken, username = user.Username, id=user.UserId});
+            var jwt = _jwtService.Generate(user.UserId);
 
+            Response.Cookies.Append("jwt", jwt, new CookieOptions
+            {
+                HttpOnly = true
+            });
+
+            return Ok(new
+            {
+                message = "success"
+            });
         }
+
+        [HttpGet("user")]
+        public IActionResult User()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                int userId = int.Parse(token.Issuer);
+
+                var user = _context.User.Where(x => x.UserId == userId).FirstOrDefault();
+
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+
+            return Ok(new
+            {
+                message = "success"
+            });
+        }
+
+
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Travelephant;
 using Travelephant.Data;
+using Travelephant.Helper;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TravelephantContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TravelephantContext") ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
@@ -16,6 +18,13 @@ builder.Services.AddSwaggerGen();
 //to get the secret key for jwt authentication
 builder.Services.Configure<AppSettings>(
     builder.Configuration.GetSection("ApplicationSettings"));
+
+builder.Services.AddScoped<JwtService>();
+
+//var provider = builder.Services.BuildServiceProvider();
+//var configuration = provider.GetRequiredService<IConfiguration>();
+
+
 
 builder.Services.AddCors(options =>
 {
@@ -36,7 +45,12 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(options => options
+.WithOrigins(new[] { "http:/localhost:3000" })
+.AllowAnyHeader()
+.AllowAnyMethod()
+.AllowCredentials()
+);
 
 app.UseAuthorization();
 
