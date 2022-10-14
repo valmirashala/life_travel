@@ -1321,3 +1321,4 @@ C:\Users\User\Documents\GitHub\life_travel\Travelephant\Travelephant\obj\Debug\n
 C:\Users\User\Documents\GitHub\life_travel\Travelephant\Travelephant\obj\Debug\net6.0\Travelephant.pdb
 C:\Users\User\Documents\GitHub\life_travel\Travelephant\Travelephant\obj\Debug\net6.0\Travelephant.genruntimeconfig.cache
 C:\Users\User\Documents\GitHub\life_travel\Travelephant\Travelephant\obj\Debug\net6.0\ref\Travelephant.dll
+C:\Users\User\Documents\GitHub\life_travel\Travelephant\Travelephant\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

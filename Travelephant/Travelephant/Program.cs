@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Travelephant;
 using Travelephant.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TravelephantContext>(options =>
@@ -12,7 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//to get the secret key for jwt authentication
+builder.Services.Configure<AppSettings>(
+    builder.Configuration.GetSection("ApplicationSettings"));
+
 var provider = builder.Services.BuildServiceProvider();
+
 var configuration = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddCors(options =>
 {

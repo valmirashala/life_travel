@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,9 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Travelephant.Body;
 using Travelephant.Data;
 using Travelephant.Model;
+using System.Text;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Travelephant.Controllers
 {
@@ -19,10 +24,12 @@ namespace Travelephant.Controllers
     public class UsersController : ControllerBase
     {
         private readonly TravelephantContext _context;
+        private readonly AppSettings _applicationSettings;
 
-        public UsersController(TravelephantContext context)
+        public UsersController(TravelephantContext context, IOptions<AppSettings> _applicationSettings)
         {
             _context = context;
+            this._applicationSettings = _applicationSettings.Value;
         }
 
         [HttpGet("user-admin")]
@@ -85,6 +92,39 @@ namespace Travelephant.Controllers
 
             return user;
             
+        }
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserBody userBody)
+        {
+            var user = _context.User
+                 .Where(x => x.Username == userBody.Username).FirstOrDefault();
+           
+            //check if user with that username exists
+            if (user == null)
+            {
+                return BadRequest("Username is invalid");
+            }
+
+            //Check if name the user wrote id compatible with the name of the user with the same id
+            //This is just for testing purposes(in a real website we should check the password)
+            var match = (user.Name == userBody.Name) ? true : false;
+            if (!match)
+            {
+                return BadRequest("Username or Name was Invalid");
+            }
+            //If name and username matches create the jwt token and return to the user
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key= Encoding.ASCII.GetBytes(this._applicationSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Username) }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var encrypterToken = tokenHandler.WriteToken(token);
+            return Ok(new { token = encrypterToken, username = user.Username, id=user.UserId});
+
         }
     }
 }
