@@ -5,6 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 WORKDIR /
+RUN ls
 COPY ["Travelephant/nuget.config", "./"]
 COPY ["Travelephant/Travelephant.csproj", "Travelephant/"]
 
