@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 WORKDIR /
 RUN ls -a
-COPY ["Travelephant/nuget.config", "./"]
+COPY ["nuget.config", "./"]
 COPY ["Travelephant/Travelephant.csproj", "Travelephant/"]
 
 RUN dotnet restore "Travelephant/Travelephant.csproj" --configfile ./nuget.config
