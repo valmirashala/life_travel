@@ -132,7 +132,7 @@ namespace Travelephant.Controllers
             }
             catch (Exception)
             {
-                return Unauthorized();
+                return Unauthorized("error");
             }
         }
 
