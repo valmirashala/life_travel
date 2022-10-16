@@ -39,6 +39,22 @@ namespace Travelephant.Controllers
         }
 
         [HttpGet("get-tickets")]
+<<<<<<< HEAD
+        public IEnumerable<TicketToShow> GetTickets(string Username)
+        {
+            var userInfo = _context.User
+                .Where(x => x.Username.ToLower() == Username.ToLower()).FirstOrDefault();
+
+            if (userInfo == null)
+            {
+                return Enumerable.Empty<TicketToShow>();
+            }
+
+            var busInfo = _context.BusInfo.ToList();
+
+            var Tickets = _context.Ticket
+                .Where(x => x.UserID == userInfo.UserId).ToList();
+=======
         public IEnumerable<TicketToShow> GetTickets(string username)
         {
             if(string.IsNullOrWhiteSpace(username))
@@ -56,6 +72,7 @@ namespace Travelephant.Controllers
             var busInfo = _context.BusInfo.ToList();
 
 
+>>>>>>> 6458bf875943329785591a9103918008a35383c7
 
             var TicketsToShow = Tickets.Select(x => new TicketToShow
             {
@@ -105,11 +122,11 @@ namespace Travelephant.Controllers
         }
 
         [HttpPost("book-ticket")]
-        public IEnumerable<TicketToShow> BookTicket(int UserID, int BusID)
+        public IEnumerable<TicketToShow> BookTicket(int UserID, string Departure, int DepartureTime)
         {
             //Get busline infos with BusID
             var busInfo = _context.BusInfo
-                .Where(x => x.BusId == BusID).FirstOrDefault();
+                .Where(x => x.Departure == Departure && x.DepartureTime == DepartureTime).FirstOrDefault();
 
             var userInfo = _context.User
                 .Where(x => x.UserId == UserID).FirstOrDefault();
@@ -121,14 +138,14 @@ namespace Travelephant.Controllers
             var ticket = new Ticket
             {
                 UserID = UserID,
-                BusID = BusID,
+                BusID = busInfo.BusId,
                 IsActive = true,
             };
 
             _context.Ticket.Add(ticket);
             _context.SaveChanges();
             var Tickets = _context.Ticket
-                .Where(x => x.UserID == UserID && x.BusID == BusID).ToList();
+                .Where(x => x.UserID == UserID && x.BusID == ticket.BusID).ToList();
 
             var TicketsToShow = Tickets.Select(x => new TicketToShow
             {

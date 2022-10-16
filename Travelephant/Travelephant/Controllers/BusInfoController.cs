@@ -88,6 +88,7 @@ namespace Travelephant.Controllers
                 }
                 var SecondFilteredDataToShow = SecondFiltered.Select(x => new BusInfoToShow
                 {
+                    ID = x.BusId,
                     Name = x.Name,
                     Departure = x.Departure,
                     DepartureTime = x.DepartureTime,
@@ -99,6 +100,7 @@ namespace Travelephant.Controllers
 
                 var FirstFilteredDataToShow = FirstFiltered.Select(x => new BusInfoToShow
                 {
+                    ID = x.BusId,
                     Name = x.Name,
                     Departure = x.Departure,
                     DepartureTime = x.DepartureTime,
@@ -116,6 +118,7 @@ namespace Travelephant.Controllers
 
             var FilteredDataToShow = FilteredData.Select(x => new BusInfoToShow
             {
+                ID = x.BusId,
                 Name = x.Name,
                 Departure = x.Departure,
                 DepartureTime = x.DepartureTime,
