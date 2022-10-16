@@ -21,7 +21,7 @@ namespace Travelephant.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ticket>()
-                .HasKey(c => new { c.UserID, c.BusID });
+                .HasKey(c => new {c.ID, c.UserID, c.BusID });
             modelBuilder.Entity<BusInfo>()
                 .HasKey(c => new { c.BusId});
             modelBuilder.Entity<User>()

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Travelephant.Body;
 using Travelephant.Data;
 using Travelephant.Model;
+using Travelephant.Show;
 
 namespace Travelephant.Controllers
 {
@@ -15,14 +17,24 @@ namespace Travelephant.Controllers
         }
 
         [HttpGet("all-bus-info")]
-        public List<BusInfo> GetAll()
+        public List<BusInfoToShow> GetAll()
         {
             var AllBusInfo = _context.BusInfo.ToList();
-            return AllBusInfo;
+            var AllBusInfoToSHow = AllBusInfo.Select(x => new BusInfoToShow
+            {
+                Name = x.Name,
+                Departure = x.Departure,
+                DepartureTime = x.DepartureTime,
+                Destination = x.Destination,
+                ArrivalTime = x.ArrivalTime,
+                Price = x.Price,
+                AvailableSeats = x.AvailableSeat
+            }).ToList();
+            return AllBusInfoToSHow;
         }
 
         [HttpGet("sepcific-bus-info")]
-        public IEnumerable<BusInfo> Get(string Departure, string Destination,
+        public IEnumerable<BusInfoToShow> Get(string Departure, string Destination,
             int? fromTime, int? toTime)
         {
             //Filters lines that satart at Departure and ends on Destination
@@ -73,13 +85,45 @@ namespace Travelephant.Controllers
                         SecondFiltered = new List<BusInfo>(tmp);
                     }
                 }
+                var SecondFilteredDataToShow = SecondFiltered.Select(x => new BusInfoToShow
+                {
+                    Name = x.Name,
+                    Departure = x.Departure,
+                    DepartureTime = x.DepartureTime,
+                    Destination = x.Destination,
+                    ArrivalTime = x.ArrivalTime,
+                    Price = x.Price,
+                    AvailableSeats = x.AvailableSeat
+                });
 
-                return SecondFiltered.Union(FirstFiltered);
+                var FirstFilteredDataToShow = FirstFiltered.Select(x => new BusInfoToShow
+                {
+                    Name = x.Name,
+                    Departure = x.Departure,
+                    DepartureTime = x.DepartureTime,
+                    Destination = x.Destination,
+                    ArrivalTime = x.ArrivalTime,
+                    Price = x.Price,
+                    AvailableSeats = x.AvailableSeat
+                });
+
+
+
+                return SecondFilteredDataToShow.Union(FirstFilteredDataToShow);
             }
 
 
-
-            return FilteredData;
+            var FilteredDataToShow = FilteredData.Select(x => new BusInfoToShow
+            {
+                Name = x.Name,
+                Departure = x.Departure,
+                DepartureTime = x.DepartureTime,
+                Destination = x.Destination,
+                ArrivalTime = x.ArrivalTime,
+                Price = x.Price,
+                AvailableSeats = x.AvailableSeat
+            });
+            return FilteredDataToShow;
         }
 
         [HttpGet("bus-line-id")]
@@ -209,7 +253,8 @@ namespace Travelephant.Controllers
             //If the user is admin update the bus line
             if (user.IsAdmin)
             {
-                var busLineFromDb = _context.BusInfo.Where(x => x.BusId == busInfoBody.BusId).FirstOrDefault();
+                var busLineFromDb = _context.BusInfo
+                    .Where(x => x.Departure == busInfoBody.Departure && x.DepartureTime == busInfoBody.DepartureTime).FirstOrDefault();
 
                 if (busLineFromDb == null)
                     return new BusInfo();

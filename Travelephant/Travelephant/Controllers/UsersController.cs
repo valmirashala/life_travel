@@ -1,15 +1,13 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using Travelephant.Body;
 using Travelephant.Data;
 using Travelephant.Model;
 using Travelephant.Helper;
 using Travelephant.Dtos;
+using Travelephant.ModelToShow;
 
 namespace Travelephant.Controllers
 {
-
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -36,7 +34,7 @@ namespace Travelephant.Controllers
         }
 
         [HttpPost("add-user")]
-        public IEnumerable<User> AddUser([FromBody] UserBody userBody)
+        public IEnumerable<UserToShow> AddUser([FromBody] UserBody userBody)
         {
             var user = _context.User
                 .Where(x => x.Username == userBody.Username).FirstOrDefault();
@@ -49,28 +47,38 @@ namespace Travelephant.Controllers
                     Surname = userBody.Surname,
                     Username = userBody.Username,
                     Address = userBody.Address,
-                    IsAdmin = true
+                    IsAdmin = false
                 };
                 _context.Add(newUser);
                 _context.SaveChanges();
                 var Users = _context.User
                     .Where(x => x.Username == newUser.Username).ToList();
-                return Users;
+
+                var UsersToShow = Users.Select(x => new UserToShow
+                {
+                    Username = x.Username,
+                    Name = x.Name,
+                    Surname = x.Surname,
+                    Address = x.Address,
+                    Admin = x.IsAdmin ? "Administrator" : "Perdorues i thjesht"
+                });
+
+                return UsersToShow;
             }
             else
             {
-                return Enumerable.Empty<User>();
+                return Enumerable.Empty<UserToShow>();
             }
         }
         [HttpPut("update-username")]
-        public User UpdateUsername(string Username, [FromBody] UserBody UserBody)
+        public IEnumerable<UserToShow> UpdateUsername(string Username, [FromBody] UserBody UserBody)
         {
             //Get User with username == Username
             var user = _context.User
                 .Where(x => x.Username == Username).FirstOrDefault();
 
             if (user == null)
-                return new User();
+                return Enumerable.Empty<UserToShow>();
 
             user.Name = UserBody.Name;
             user.Surname = UserBody.Surname;
@@ -80,9 +88,21 @@ namespace Travelephant.Controllers
             _context.User.Update(user);
             _context.SaveChanges();
 
-            return user;
+            var Users = _context.User
+                .Where(x => x.Username == UserBody.Username).ToList();
 
+            var UsersToShow = Users.Select(x => new UserToShow
+            {
+                Username = x.Username,
+                Name = x.Name,
+                Surname = x.Surname,
+                Address = x.Address,
+                Admin = x.IsAdmin ? "Administrator" : "Perdorues i thjesht"
+            });
+
+            return UsersToShow;
         }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto userBody)
         {
