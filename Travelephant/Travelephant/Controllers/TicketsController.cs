@@ -39,22 +39,6 @@ namespace Travelephant.Controllers
         }
 
         [HttpGet("get-tickets")]
-<<<<<<< HEAD
-        public IEnumerable<TicketToShow> GetTickets(string Username)
-        {
-            var userInfo = _context.User
-                .Where(x => x.Username.ToLower() == Username.ToLower()).FirstOrDefault();
-
-            if (userInfo == null)
-            {
-                return Enumerable.Empty<TicketToShow>();
-            }
-
-            var busInfo = _context.BusInfo.ToList();
-
-            var Tickets = _context.Ticket
-                .Where(x => x.UserID == userInfo.UserId).ToList();
-=======
         public IEnumerable<TicketToShow> GetTickets(string username)
         {
             if(string.IsNullOrWhiteSpace(username))
@@ -70,9 +54,6 @@ namespace Travelephant.Controllers
                 .Where(x => x.UserID == userInfo.UserId).ToList();
 
             var busInfo = _context.BusInfo.ToList();
-
-
->>>>>>> 6458bf875943329785591a9103918008a35383c7
 
             var TicketsToShow = Tickets.Select(x => new TicketToShow
             {
