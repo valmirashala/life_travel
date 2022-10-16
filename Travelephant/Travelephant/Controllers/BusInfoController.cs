@@ -22,6 +22,7 @@ namespace Travelephant.Controllers
             var AllBusInfo = _context.BusInfo.ToList();
             var AllBusInfoToSHow = AllBusInfo.Select(x => new BusInfoToShow
             {
+                ID = x.BusId,
                 Name = x.Name,
                 Departure = x.Departure,
                 DepartureTime = x.DepartureTime,
