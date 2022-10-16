@@ -39,15 +39,23 @@ namespace Travelephant.Controllers
         }
 
         [HttpGet("get-tickets")]
-        public IEnumerable<TicketToShow> GetTickets(int Id)
+        public IEnumerable<TicketToShow> GetTickets(string username)
         {
+            if(string.IsNullOrWhiteSpace(username))
+                return Enumerable.Empty<TicketToShow>();
+
+            var userInfo = _context.User
+                .Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
+
+            if (userInfo == null)
+                return Enumerable.Empty<TicketToShow>();
+
             var Tickets = _context.Ticket
-                .Where(x => x.UserID == Id).ToList();
+                .Where(x => x.UserID == userInfo.UserId).ToList();
 
             var busInfo = _context.BusInfo.ToList();
 
-            var userInfo = _context.User
-                .Where(x => x.UserId == Id).FirstOrDefault();
+
 
             var TicketsToShow = Tickets.Select(x => new TicketToShow
             {
@@ -80,7 +88,7 @@ namespace Travelephant.Controllers
                 busInfo.AvailableSeat++;
             }
 
-            _context.SaveChanges();
+            //_context.Ticket.SaveChanges();
             var Tickets = _context.Ticket
                 .Where(x => x.UserID == UserID && x.BusID == BusID && !x.IsActive).ToList();
 
