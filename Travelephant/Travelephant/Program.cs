@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using Travelephant;
 using Travelephant.Data;
 using Travelephant.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = Debugger.IsAttached ? builder.Configuration.GetConnectionString("TravelephantContext") : builder.Configuration["ConnectionStrings__TravelephantContext"];
 builder.Services.AddDbContext<TravelephantContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TravelephantContext") ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
+    options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
 
 // Add services to the container.
 
