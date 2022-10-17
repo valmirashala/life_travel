@@ -28,11 +28,10 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddCors(options =>
 {
+    var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
     options.AddDefaultPolicy(builder =>
     {
-        builder.AllowAnyOrigin();
-        builder.AllowAnyHeader();
-        builder.AllowAnyMethod();
+        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
 
