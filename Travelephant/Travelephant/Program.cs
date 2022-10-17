@@ -6,11 +6,8 @@ using Travelephant.Data;
 using Travelephant.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("TravelephantContext");
-if(string.IsNullOrWhiteSpace(connectionString))
-    connectionString = builder.Configuration["ConnectionStrings__TravelephantContext"];
 builder.Services.AddDbContext<TravelephantContext>(options =>
-    options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TravelephantContext") ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
 
 // Add services to the container.
 
@@ -32,7 +29,7 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
 
