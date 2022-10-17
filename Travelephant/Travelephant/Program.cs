@@ -6,7 +6,9 @@ using Travelephant.Data;
 using Travelephant.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = Debugger.IsAttached ? builder.Configuration.GetConnectionString("TravelephantContext") : builder.Configuration["ConnectionStrings__TravelephantContext"];
+var connectionString = builder.Configuration.GetConnectionString("TravelephantContext");
+if(string.IsNullOrWhiteSpace(connectionString))
+    connectionString = builder.Configuration["ConnectionStrings__TravelephantContext"];
 builder.Services.AddDbContext<TravelephantContext>(options =>
     options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'TravelephantContext' not found.")));
 
