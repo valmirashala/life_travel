@@ -26,14 +26,11 @@ builder.Services.AddScoped<JwtService>();
 
 
 
-builder.Services.AddCors(options =>
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-    });
-});
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 
 var app = builder.Build();
 
@@ -43,7 +40,7 @@ app.UseSwaggerUI();
 
 
 //app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("corsapp");
 
 app.UseAuthorization();
 
