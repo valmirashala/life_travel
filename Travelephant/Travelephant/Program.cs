@@ -28,7 +28,7 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 }));
 
 
